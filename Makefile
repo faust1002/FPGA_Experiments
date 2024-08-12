@@ -2,6 +2,7 @@ DESIGN = test
 DEVICE = xc7a100tcsg324-1
 BUILD_DIR = ./build_artifacts
 SRC_DIR = ./src
+TB_DIR = ./tb
 XDC_FILE = Nexys-A7-100T-Master.xdc
 EDIF_FILE = ${DESIGN}.edf
 
@@ -22,8 +23,15 @@ ${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl
 
 .PHONY: clean
 clean:
-	rm -rf *.jou *.log *.tar.gz clockInfo.txt ${BUILD_DIR}
+	rm -rf *.jou *.log *.tar.gz *.vcd clockInfo.txt ${BUILD_DIR}
 
 .PHONY: tar
 tar:
-	tar -zcvf ${DESIGN}.tar.gz *.jou *.log *.tcl clockInfo.txt Makefile ${BUILD_DIR}
+	tar -zcvf ${DESIGN}.tar.gz *.jou *.log *.tcl *.vcd clockInfo.txt Makefile ${BUILD_DIR}
+
+${BUILD_DIR}/testbench: ${SRC_DIR}/*.v ${TB_DIR}/*.v
+	iverilog -Dtestbench -Wall $^ -o $@
+
+.PHONY: sim
+sim: ${BUILD_DIR}/testbench
+	vvp $^
