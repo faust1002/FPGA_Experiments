@@ -3,6 +3,7 @@ DEVICE = xc7a100tcsg324-1
 BUILD_DIR = ./build_artifacts
 SRC_DIR = ./src
 TB_DIR = ./tb
+XDC_DIR = ./xdc
 XDC_FILE = Nexys-A7-100T-Master.xdc
 EDIF_FILE = ${DESIGN}.edf
 
@@ -15,8 +16,8 @@ bitstream: ${BUILD_DIR}/${DESIGN}.bit
 .PHONY: synth
 synth: ${BUILD_DIR}/${EDIF_FILE}
 
-${BUILD_DIR}/${DESIGN}.bit: ./run_vivado_bitstream.tcl ${BUILD_DIR}/${EDIF_FILE} ${SRC_DIR}/${XDC_FILE}
-	vivado -mode batch -source run_vivado_bitstream.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${XDC_FILE} ${SRC_DIR} ${BUILD_DIR}
+${BUILD_DIR}/${DESIGN}.bit: ./run_vivado_bitstream.tcl ${BUILD_DIR}/${EDIF_FILE} ${XDC_DIR}/${XDC_FILE}
+	vivado -mode batch -source run_vivado_bitstream.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${XDC_FILE} ${XDC_DIR} ${BUILD_DIR}
 
 ${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl
 	vivado -mode batch -source run_vivado_synth.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${SRC_DIR} ${BUILD_DIR}
