@@ -34,5 +34,5 @@ ${BUILD_DIR}/testbench: ${SRC_DIR}/*.v ${TB_DIR}/*.v
 	iverilog -Dtestbench -Wall $^ -o $@
 
 .PHONY: sim
-sim: ${BUILD_DIR}/testbench
-	vvp $^
+sim:
+	./test_runner.py
