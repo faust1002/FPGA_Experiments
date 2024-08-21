@@ -19,7 +19,7 @@ synth: ${BUILD_DIR}/${EDIF_FILE}
 ${BUILD_DIR}/${DESIGN}.bit: ./run_vivado_bitstream.tcl ${BUILD_DIR}/${EDIF_FILE} ${XDC_DIR}/${XDC_FILE}
 	vivado -mode batch -source run_vivado_bitstream.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${XDC_FILE} ${XDC_DIR} ${BUILD_DIR}
 
-${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl
+${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl ${SRC_DIR}/*.v
 	vivado -mode batch -source run_vivado_synth.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${SRC_DIR} ${BUILD_DIR}
 
 .PHONY: clean
