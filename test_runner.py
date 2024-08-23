@@ -11,7 +11,7 @@ def test_my_design_runner():
 
     proj_path = Path(__file__).resolve().parent
 
-    sources = [proj_path / "src/test.v"]
+    sources = [proj_path / "src/test.v", proj_path / "src/multiplier.v"]
     testbenches = [proj_path / "tb"]
     env_variables = {"PYTHONPATH": testbenches}
 

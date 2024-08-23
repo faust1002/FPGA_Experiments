@@ -18,7 +18,13 @@ module test(input wire clk,
         end
     end
 
-    wire [32:0] final_result = primary_counter * secondary_counter + 1'b1;
+    // wire [31:0] final_result = primary_counter * secondary_counter + 1'b1;
+    wire [31:0] final_result;
+    wire [31:0] counter_product;
+    multiplier multiplier_i(primary_counter,
+                            secondary_counter,
+                            counter_product);
+    assign final_result = counter_product + 1'b1;
     assign led = final_result[3:0];
 
 endmodule
