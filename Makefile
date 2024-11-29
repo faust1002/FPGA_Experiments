@@ -17,14 +17,14 @@ bitstream: ${BUILD_DIR}/${DESIGN}.bit
 synth: ${BUILD_DIR}/${EDIF_FILE}
 
 ${BUILD_DIR}/${DESIGN}.bit: ./run_vivado_bitstream.tcl ${BUILD_DIR}/${EDIF_FILE} ${XDC_DIR}/${XDC_FILE}
-	vivado -mode batch -source run_vivado_bitstream.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${XDC_FILE} ${XDC_DIR} ${BUILD_DIR}
+	LD_PRELOAD=/lib/x86_64-linux-gnu/libudev.so.1 vivado -mode batch -source run_vivado_bitstream.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${XDC_FILE} ${XDC_DIR} ${BUILD_DIR}
 
 ${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl ${SRC_DIR}/*.v
-	vivado -mode batch -source run_vivado_synth.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${SRC_DIR} ${BUILD_DIR}
+	LD_PRELOAD=/lib/x86_64-linux-gnu/libudev.so.1 vivado -mode batch -source run_vivado_synth.tcl -tclargs ${DESIGN} ${DEVICE} ${EDIF_FILE} ${SRC_DIR} ${BUILD_DIR}
 
 .PHONY: clean
 clean:
-	rm -rf *.jou *.log *.tar.gz *.vcd clockInfo.txt __pycache__ ${TB_DIR}/__pycache__ ${BUILD_DIR} sim_build
+	rm -rf .Xil *.jou *.log *.tar.gz *.vcd clockInfo.txt __pycache__ ${TB_DIR}/__pycache__ ${BUILD_DIR} sim_build
 
 .PHONY: tar
 tar:
