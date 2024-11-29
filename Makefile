@@ -24,7 +24,7 @@ ${BUILD_DIR}/${EDIF_FILE}: ./run_vivado_synth.tcl ${SRC_DIR}/*.v
 
 .PHONY: clean
 clean:
-	rm -rf *.jou *.log *.tar.gz *.vcd clockInfo.txt __pycache__ ${TB_DIR}/__pycache__ ${BUILD_DIR}
+	rm -rf *.jou *.log *.tar.gz *.vcd clockInfo.txt __pycache__ ${TB_DIR}/__pycache__ ${BUILD_DIR} sim_build
 
 .PHONY: tar
 tar:
@@ -35,4 +35,4 @@ ${BUILD_DIR}/testbench: ${SRC_DIR}/*.v ${TB_DIR}/*.v
 
 .PHONY: sim
 sim:
-	./test_runner.py
+	PYTHONPATH=${TB_DIR} ./test_runner.py
