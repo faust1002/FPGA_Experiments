@@ -23,7 +23,7 @@ def calculate_led_value(iteration = 0):
 
 async def reset_dut(reset, duration_ns):
     reset.value = 1;
-    await Timer(duration_ns, units = "ns")
+    await Timer(duration_ns, unit = "ns")
     reset.value = 0;
 
 @cocotb.test()
@@ -39,7 +39,7 @@ async def test_tb_basic_scenario(dut):
     # Initially, after reset is applied, but clk is not enabled, all values should be set to 0
     assert dut.led.value == calculate_led_value()
 
-    clock = Clock(dut.clk, 10, units="ns") #Create a 10us period clock on port clk
+    clock = Clock(dut.clk, 10, unit = "ns") #Create a 10us period clock on port clk
     cocotb.start_soon(clock.start(start_high = False))
 
     cocotb.log.debug("Starting the actual test case")
