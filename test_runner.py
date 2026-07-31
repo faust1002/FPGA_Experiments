@@ -9,7 +9,7 @@ from cocotb_tools.runner import get_runner
 def test_my_design_runner():
     sim = os.getenv("SIM", "icarus")
     build_dir = os.getenv("SIM_DIR")
-    print(build_dir)
+    waves = os.getenv("WAVES", "0") == "1"
 
     proj_path = Path(__file__).resolve().parent
 
@@ -18,10 +18,17 @@ def test_my_design_runner():
     env_variables = {"PYTHONPATH": testbenches}
 
     runner = get_runner(sim)
-    runner.build(sources = sources, hdl_toplevel = "top", verbose = True, build_dir = build_dir)
+    runner.build(sources = sources,
+                 hdl_toplevel = "top",
+                 verbose = True,
+                 build_dir = build_dir,
+                 waves = waves)
 
-    runner.test(hdl_toplevel = "top", test_module = "test_tb", extra_env = env_variables, waves = True, verbose = True)
+    runner.test(hdl_toplevel = "top",
+                test_module = "test_tb",
+                extra_env = env_variables,
+                waves = waves,
+                verbose = True)
 
 if __name__ == "__main__":
     test_my_design_runner()
-
