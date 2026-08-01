@@ -7,7 +7,7 @@ from typing import Mapping
 from cocotb_tools.runner import get_runner
 
 def test_my_design_runner():
-    sim = os.getenv("SIM", "icarus")
+    sim = os.getenv("SIM", "verilator")
     build_dir = os.getenv("SIM_DIR")
     waves = os.getenv("WAVES", "0") == "1"
 

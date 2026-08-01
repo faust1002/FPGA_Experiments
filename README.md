@@ -38,9 +38,8 @@ interaction is driven through Tcl scripts — no GUI required.
 - GNU Make
 - Python 3 + cocotb (for simulation)
 - pytest (for running testbenches)
-- Icarus Verilog (for simulation)
 - pre-commit (for code quality hooks)
-- Verilator (for linting)
+- Verilator (for linting and simulation)
 
 ### Quick Start
 
