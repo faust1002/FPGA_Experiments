@@ -59,7 +59,7 @@ make synth    # Run synthesis
 make sim      # Run testbenches
 ```
 
-Code Quality
+### Code Quality
 
 Pre-commit hooks are configured for automated linting on staged files. To set up:
 
