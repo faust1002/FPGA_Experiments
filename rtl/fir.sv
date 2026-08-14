@@ -1,3 +1,5 @@
+`timescale 1us/1ps
+
 module fir #(parameter int DATA_WIDTH   = 16,
              parameter int COEFF_WIDTH  = 16,
              parameter int NUM_TAPS     = 9,

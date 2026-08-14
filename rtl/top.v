@@ -19,7 +19,9 @@ module top(input wire clk,
     end
 
     // wire [31:0] final_result = primary_counter * secondary_counter + 1'b1;
+    /* verilator lint_off UNUSEDSIGNAL */
     wire [31:0] final_result;
+    /* verilator lint_on UNUSEDSIGNAL */
     wire [31:0] counter_product;
     multiplier multiplier_i(primary_counter,
                             secondary_counter,

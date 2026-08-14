@@ -26,6 +26,6 @@ repos:
     hooks:
       - id: verilator-lint
         name: Verilator linter
-        entry: verilator --lint-only -Wall --quiet
+        entry: verilator --lint-only -Wall --quiet --top-module top -y ./rtl
         language: system
         files: \.(v|sv)$
