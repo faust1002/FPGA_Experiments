@@ -5,6 +5,23 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: mixed-line-ending
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 9.0.0b2
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: v4.0.7
+    hooks:
+      - id: pylint
+        additional_dependencies: ["cocotb"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v2.3.0
+    hooks:
+      - id: mypy
+
   - repo: local
     hooks:
       - id: verilator-lint

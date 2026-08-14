@@ -1,3 +1,6 @@
 cocotb
 pytest
 pre-commit
+isort
+pylint
+mypy

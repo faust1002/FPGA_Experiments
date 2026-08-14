@@ -2,9 +2,9 @@
 
 import os
 from pathlib import Path
-from typing import Mapping
 
 from cocotb_tools.runner import get_runner
+
 
 def test_my_design_runner():
     sim = os.getenv("SIM", "verilator")

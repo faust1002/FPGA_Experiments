@@ -40,6 +40,9 @@ interaction is driven through Tcl scripts — no GUI required.
 - pytest (for running testbenches)
 - pre-commit (for code quality hooks)
 - Verilator (for linting and simulation)
+- isort (Python import sorting)
+- pylint (Python static analysis)
+- mypy (Python type checking)
 
 ### Quick Start
 
