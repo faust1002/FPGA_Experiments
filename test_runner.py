@@ -43,7 +43,7 @@ def test_my_design_runner() -> None:
         SimulatorDescriptor(
             toplevel      = "top",
             sources       = [proj_path / "rtl/top.v", proj_path / "rtl/multiplier.v"],
-            test_module   = "test_tb",
+            test_module   = "top_tb",
             env_variables = {"PYTHONPATH": [proj_path / "tb"]},
             build_dir     = build_dir,
             waves         = waves,
