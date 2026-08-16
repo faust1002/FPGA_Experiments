@@ -49,7 +49,20 @@ def test_my_design_runner() -> None:
         verbose       = True
     )
 
-    simulations = [top_tb]
+    fir_tb = SimulatorDescriptor(
+        toplevel      = "fir",
+        sources       = [proj_path / "rtl/fir.sv"],
+        test_module   = "fir_tb",
+        env_variables = {"PYTHONPATH": [proj_path / "tb"]},
+        build_dir     = build_dir / "fir_tb",
+        waves         = waves,
+        verbose       = True
+    )
+
+    simulations = [
+        top_tb,
+        fir_tb
+    ]
 
     for simulation in simulations:
         run_simulation(sim, simulation)
