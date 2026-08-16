@@ -44,6 +44,7 @@ interaction is driven through Tcl scripts — no GUI required.
 - pylint (Python static analysis)
 - mypy (Python type checking)
 - scipy (for FIR simulation)
+- numpy (for FIR simulation)
 
 ### Quick Start
 

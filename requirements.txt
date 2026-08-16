@@ -2,6 +2,7 @@ cocotb
 fxpmath
 isort
 mypy
+numpy
 pre-commit
 pylint
 pytest

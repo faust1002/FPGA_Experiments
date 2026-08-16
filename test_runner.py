@@ -6,6 +6,8 @@ from pathlib import Path
 
 from cocotb_tools.runner import get_runner
 
+from tb.fir_config import fir_parameters
+
 
 @dataclass
 class SimulatorDescriptor:
@@ -49,12 +51,13 @@ def test_my_design_runner() -> None:
     )
 
     fir_tb = SimulatorDescriptor(
-        toplevel      = "fir",
-        sources       = [proj_path / "rtl/fir.sv"],
-        test_module   = "fir_tb",
-        build_dir     = build_dir / "fir_tb",
-        waves         = waves,
-        verbose       = True
+        toplevel         = "fir",
+        sources          = [proj_path / "rtl/fir.sv"],
+        test_module      = "fir_tb",
+        build_dir        = build_dir / "fir_tb",
+        waves            = waves,
+        verbose          = True,
+        extra_parameters = fir_parameters
     )
 
     simulations = [

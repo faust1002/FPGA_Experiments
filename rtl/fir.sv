@@ -3,12 +3,13 @@
 module fir #(parameter int DATA_WIDTH   = 18,
              parameter int COEFF_WIDTH  = 18,
              parameter int NUM_TAPS     = 43,
-             parameter int OUTPUT_WIDTH = DATA_WIDTH + COEFF_WIDTH + $clog2(NUM_TAPS),
              parameter string COEFFS_FILE = "./fir_coeffs.txt")
             (input  logic                           clk,
              input  logic                           rst_n,
              input  logic signed [DATA_WIDTH-1:0]   x,
-             output logic signed [OUTPUT_WIDTH-1:0] y);
+             output logic signed [DATA_WIDTH-1:0]   y);
+
+    localparam int OUTPUT_WIDTH = DATA_WIDTH + COEFF_WIDTH;
 
     logic signed [COEFF_WIDTH-1:0] COEFFS [NUM_TAPS];
     initial begin
@@ -17,7 +18,8 @@ module fir #(parameter int DATA_WIDTH   = 18,
 
     logic signed [DATA_WIDTH-1:0]             delay_line [NUM_TAPS];
     logic signed [OUTPUT_WIDTH-1:0]           acc;
-    logic signed [DATA_WIDTH+COEFF_WIDTH-1:0] products   [NUM_TAPS];
+    logic signed [OUTPUT_WIDTH-1:0] products  [NUM_TAPS];
+
 
     always_ff @(posedge clk) begin
         if (!rst_n) begin
@@ -34,13 +36,13 @@ module fir #(parameter int DATA_WIDTH   = 18,
         acc = '0;
         for (int i = 0; i < NUM_TAPS; i++) begin
             products[i] = delay_line[i] * COEFFS[i];
-            acc += OUTPUT_WIDTH'(products[i]);
+            acc += products[i];
         end
     end
 
     always_ff @(posedge clk) begin
         if (!rst_n) y <= '0;
-        else        y <= acc;
+        else        y <= acc[OUTPUT_WIDTH - 1 : DATA_WIDTH];
     end
 
 endmodule

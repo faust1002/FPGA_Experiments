@@ -9,6 +9,7 @@ from scipy.signal import firwin
 N_WORD = 18
 N_FRAC = N_WORD - 2
 SIGNED = True
+OVERFLOW = 'wrap'
 
 SAMPLING_FREQ = 122.88e6
 CUTOFF_FREQ   = 30.72e6
@@ -22,7 +23,7 @@ fir_parameters = {"DATA_WIDTH":  N_WORD,
                   "COEFFS_FILE": f'"{str(coeffs_path)}"'}
 
 fir_coeffs = firwin(fir_parameters["NUM_TAPS"], CUTOFF_FREQ, fs = SAMPLING_FREQ)
-fir_coeffs = Fxp(fir_coeffs, signed = SIGNED, n_word = N_WORD, n_frac = N_FRAC)
+fir_coeffs = Fxp(fir_coeffs, signed = SIGNED, n_word = N_WORD, n_frac = N_FRAC, overflow = OVERFLOW)
 
 def main():
     print("Hello")
