@@ -13,7 +13,7 @@ class SimulatorDescriptor:
     sources: list
     test_module: str
     env_variables: dict
-    build_dir: str
+    build_dir: Path
     waves: bool
     verbose: bool
 
@@ -34,22 +34,22 @@ def run_simulation(sim, simulation_descriptor : SimulatorDescriptor) -> None:
 
 def test_my_design_runner() -> None:
     sim = os.getenv("SIM", "verilator")
-    build_dir = os.getenv("SIM_DIR", "./output/sim")
+    build_dir = Path(os.getenv("SIM_DIR", "./output/sim"))
     waves = os.getenv("WAVES", "0") == "1"
 
     proj_path = Path(__file__).resolve().parent
 
-    simulations = [
-        SimulatorDescriptor(
-            toplevel      = "top",
-            sources       = [proj_path / "rtl/top.v", proj_path / "rtl/multiplier.v"],
-            test_module   = "top_tb",
-            env_variables = {"PYTHONPATH": [proj_path / "tb"]},
-            build_dir     = build_dir,
-            waves         = waves,
-            verbose       = True
-        )
-    ]
+    top_tb = SimulatorDescriptor(
+        toplevel      = "top",
+        sources       = [proj_path / "rtl/top.v", proj_path / "rtl/multiplier.v"],
+        test_module   = "top_tb",
+        env_variables = {"PYTHONPATH": [proj_path / "tb"]},
+        build_dir     = build_dir / "top_tb",
+        waves         = waves,
+        verbose       = True
+    )
+
+    simulations = [top_tb]
 
     for simulation in simulations:
         run_simulation(sim, simulation)
