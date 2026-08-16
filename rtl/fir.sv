@@ -1,26 +1,18 @@
 `timescale 1us/1ps
 
-module fir #(parameter int DATA_WIDTH   = 16,
-             parameter int COEFF_WIDTH  = 16,
-             parameter int NUM_TAPS     = 9,
+module fir #(parameter int DATA_WIDTH   = 18,
+             parameter int COEFF_WIDTH  = 18,
+             parameter int NUM_TAPS     = 43,
              parameter int OUTPUT_WIDTH = DATA_WIDTH + COEFF_WIDTH + $clog2(NUM_TAPS))
             (input  logic                           clk,
              input  logic                           rst_n,
              input  logic signed [DATA_WIDTH-1:0]   x,
              output logic signed [OUTPUT_WIDTH-1:0] y);
 
-    // Dummy FIR coefficients, will be replaced with readmemf later on
-    localparam signed [COEFF_WIDTH-1:0] COEFFS [NUM_TAPS] = '{
-        16'sh0100,
-        16'sh0200,
-        16'sh0400,
-        16'sh0800,
-        16'sh1000,
-        16'sh0800,
-        16'sh0400,
-        16'sh0200,
-        16'sh0100
-    };
+    logic signed [COEFF_WIDTH-1:0] COEFFS [NUM_TAPS];
+    initial begin
+        $readmemh("fir_coeffs.txt", COEFFS);
+    end
 
     logic signed [DATA_WIDTH-1:0]             delay_line [NUM_TAPS];
     logic signed [OUTPUT_WIDTH-1:0]           acc;
