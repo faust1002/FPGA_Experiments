@@ -1,6 +1,8 @@
 cocotb
-pytest
-pre-commit
+fxpmath
 isort
-pylint
 mypy
+pre-commit
+pylint
+pytest
+scipy
