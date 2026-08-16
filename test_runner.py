@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from cocotb_tools.runner import get_runner
@@ -9,13 +9,13 @@ from cocotb_tools.runner import get_runner
 
 @dataclass
 class SimulatorDescriptor:
-    toplevel: str
-    sources: list
-    test_module: str
-    env_variables: dict
-    build_dir: Path
-    waves: bool
-    verbose: bool
+    toplevel:         str
+    sources:          list[Path]
+    test_module:      str
+    build_dir:        Path
+    waves:            bool
+    verbose:          bool
+    extra_parameters: dict = field(default_factory = dict)
 
 def run_simulation(sim, simulation_descriptor : SimulatorDescriptor) -> None:
     runner = get_runner(sim)
@@ -23,11 +23,11 @@ def run_simulation(sim, simulation_descriptor : SimulatorDescriptor) -> None:
                  hdl_toplevel = simulation_descriptor.toplevel,
                  verbose      = simulation_descriptor.verbose,
                  build_dir    = simulation_descriptor.build_dir,
-                 waves        = simulation_descriptor.waves)
+                 waves        = simulation_descriptor.waves,
+                 parameters   = simulation_descriptor.extra_parameters)
 
     runner.test(hdl_toplevel  = simulation_descriptor.toplevel,
                 test_module   = simulation_descriptor.test_module,
-                extra_env     = simulation_descriptor.env_variables,
                 waves         = simulation_descriptor.waves,
                 verbose       = simulation_descriptor.verbose)
 
@@ -43,7 +43,6 @@ def test_my_design_runner() -> None:
         toplevel      = "top",
         sources       = [proj_path / "rtl/top.v", proj_path / "rtl/multiplier.v"],
         test_module   = "top_tb",
-        env_variables = {"PYTHONPATH": [proj_path / "tb"]},
         build_dir     = build_dir / "top_tb",
         waves         = waves,
         verbose       = True
@@ -53,7 +52,6 @@ def test_my_design_runner() -> None:
         toplevel      = "fir",
         sources       = [proj_path / "rtl/fir.sv"],
         test_module   = "fir_tb",
-        env_variables = {"PYTHONPATH": [proj_path / "tb"]},
         build_dir     = build_dir / "fir_tb",
         waves         = waves,
         verbose       = True
