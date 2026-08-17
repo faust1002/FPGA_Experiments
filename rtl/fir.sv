@@ -3,7 +3,8 @@
 module fir #(parameter int DATA_WIDTH   = 18,
              parameter int COEFF_WIDTH  = 18,
              parameter int NUM_TAPS     = 43,
-             parameter int OUTPUT_WIDTH = DATA_WIDTH + COEFF_WIDTH + $clog2(NUM_TAPS))
+             parameter int OUTPUT_WIDTH = DATA_WIDTH + COEFF_WIDTH + $clog2(NUM_TAPS),
+             parameter string COEFFS_FILE = "./fir_coeffs.txt")
             (input  logic                           clk,
              input  logic                           rst_n,
              input  logic signed [DATA_WIDTH-1:0]   x,
@@ -11,7 +12,7 @@ module fir #(parameter int DATA_WIDTH   = 18,
 
     logic signed [COEFF_WIDTH-1:0] COEFFS [NUM_TAPS];
     initial begin
-        $readmemh("fir_coeffs.txt", COEFFS);
+        $readmemh(COEFFS_FILE, COEFFS);
     end
 
     logic signed [DATA_WIDTH-1:0]             delay_line [NUM_TAPS];
