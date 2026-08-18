@@ -15,10 +15,10 @@ module multiplier #(parameter n = 16)
     generate
     for (idx = 0; idx < n-1; idx = idx + 1) begin : partial_product_stage
         if (idx == 0) begin : gen_base
-            base_partial_product_interpolation base_partial_product_interpolation_i(m, q[1:0], link[idx], sum[idx + 1]);
+            base_partial_product_interpolation #(.n(n)) base_partial_product_interpolation_i(m, q[1:0], link[idx], sum[idx + 1]);
         end
         else begin : regular_gen
-            partial_product_interpolation partial_product_interpolation_i(link[idx-1], m, q[idx + 1], link[idx], sum[idx + 1]);
+            partial_product_interpolation #(.n(n)) partial_product_interpolation_i(link[idx-1], m, q[idx + 1], link[idx], sum[idx + 1]);
         end
     end
     endgenerate
