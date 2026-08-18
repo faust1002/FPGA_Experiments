@@ -7,6 +7,7 @@ from pathlib import Path
 from cocotb_tools.runner import get_runner
 
 from tb.fir_config import fir_parameters
+from tb.signed_multiplier_config import signed_multiplier_parameters
 
 
 @dataclass
@@ -60,9 +61,20 @@ def test_my_design_runner() -> None:
         extra_parameters = fir_parameters
     )
 
+    signed_multiplier_tb = SimulatorDescriptor(
+        toplevel         = "signed_multiplier",
+        sources          = [proj_path / "rtl/signed_multiplier.sv"],
+        test_module      = "signed_multiplier_tb",
+        build_dir        = build_dir / "signed_multiplier_tb",
+        waves            = waves,
+        verbose          = True,
+        extra_parameters = signed_multiplier_parameters
+    )
+
     simulations = [
         top_tb,
-        fir_tb
+        fir_tb,
+        signed_multiplier_tb
     ]
 
     for simulation in simulations:
