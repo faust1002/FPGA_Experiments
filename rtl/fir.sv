@@ -20,6 +20,16 @@ module fir #(parameter int DATA_WIDTH   = 18,
     logic signed [OUTPUT_WIDTH-1:0]           acc;
     logic signed [OUTPUT_WIDTH-1:0] products  [NUM_TAPS];
 
+    generate
+        for (genvar i = 0; i < NUM_TAPS; i++) begin : multipliers
+            signed_multiplier #(.X_LENGTH(DATA_WIDTH),
+                                .Y_LENGTH(COEFF_WIDTH))
+            signed_multiplier_i(.x(delay_line[i]),
+                                .y(COEFFS[i]),
+                                .z(products[i]));
+        end
+    endgenerate
+
 
     always_ff @(posedge clk) begin
         if (!rst_n) begin
@@ -35,7 +45,6 @@ module fir #(parameter int DATA_WIDTH   = 18,
     always_comb begin
         acc = '0;
         for (int i = 0; i < NUM_TAPS; i++) begin
-            products[i] = delay_line[i] * COEFFS[i];
             acc += products[i];
         end
     end

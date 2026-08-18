@@ -53,7 +53,7 @@ def test_my_design_runner() -> None:
 
     fir_tb = SimulatorDescriptor(
         toplevel         = "fir",
-        sources          = [proj_path / "rtl/fir.sv"],
+        sources          = [proj_path / "rtl/signed_multiplier.sv", proj_path / "rtl/fir.sv"],
         test_module      = "fir_tb",
         build_dir        = build_dir / "fir_tb",
         waves            = waves,
